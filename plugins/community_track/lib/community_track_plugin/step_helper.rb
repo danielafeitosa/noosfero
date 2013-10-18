@@ -1,4 +1,4 @@
-module CommunityTrackPlugin::Helpers::StepHelper
+module CommunityTrackPlugin::StepHelper
 
   def self.status_descriptions
     [_('Finished'), _('In progress'), _('Waiting')]
@@ -9,11 +9,16 @@ module CommunityTrackPlugin::Helpers::StepHelper
   end
 
   def status_description(step)
-    CommunityTrackPlugin::Helpers::StepHelper.status_descriptions[status_index(step)]
+    CommunityTrackPlugin::StepHelper.status_descriptions[status_index(step)]
   end
 
   def status_class(step)
-    CommunityTrackPlugin::Helpers::StepHelper.status_classes[status_index(step)]
+    CommunityTrackPlugin::StepHelper.status_classes[status_index(step)]
+  end
+
+  def custom_options_for_article(article)
+    #no options for step?
+    nil
   end
 
   protected

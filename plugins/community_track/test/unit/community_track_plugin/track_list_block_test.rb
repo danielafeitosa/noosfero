@@ -6,8 +6,16 @@ class TrackListBlockTest < ActiveSupport::TestCase
     @community = fast_create(Community)
     @track = CommunityTrackPlugin::Track.create!(:abstract => 'abstract', :body => 'body', :name => 'track', :profile => @community)
 
-    box = fast_create(Box, :owner_id => @community.id, :owner_type => 'Community')
+    box = fast_create(Box, :owner_id => @community.id, :owner_type => @community.class.name)
     @block = CommunityTrackPlugin::TrackListBlock.create!(:box => box)
+  end
+
+  should 'describe yourself' do
+    assert CommunityTrackPlugin::TrackListBlock.description
+  end
+
+  should 'has title' do
+    assert @block.default_title
   end
 
   should 'return track as track partial' do

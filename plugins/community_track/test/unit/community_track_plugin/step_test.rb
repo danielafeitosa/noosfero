@@ -8,6 +8,14 @@ class StepTest < ActiveSupport::TestCase
     @step = CommunityTrackPlugin::Step.new(:name => 'Step', :body => 'body', :profile => @profile, :parent => @track, :published => false, :end_date => Date.today, :start_date => Date.today)
     Delayed::Job.destroy_all
   end
+
+  should 'describe yourself' do
+    assert CommunityTrackPlugin::Step.description
+  end
+
+  should 'has a short description' do
+    assert CommunityTrackPlugin::Step.short_description
+  end
   
   should 'set published to false on create' do
     today = Date.today

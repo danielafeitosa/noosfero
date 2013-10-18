@@ -4,8 +4,9 @@
 
 <div>
   <%= required labelled_form_field(_('Title'), text_field(:article, 'name', :size => '64', :maxlength => 150)) %>
-  <%= render :partial => 'shared/lead_and_body', :locals => {:tiny_mce => true, :body_label => 'Description:'} %>
 </div>
+
+<%= render :partial => 'shared/lead_and_body', :locals => {:tiny_mce => true, :body_label => 'Description:'} %>
 
 <div>
   <% f.fields_for :image_builder, @article.image do |i| %>

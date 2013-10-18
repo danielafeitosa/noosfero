@@ -10,9 +10,9 @@
     <%= step.body %>
   </div>
   <h3><%= _("Tools") if !step.tools.empty? %></h3>
-  <div>
+  <div class="tools">
     <% step.tools.each do |tool| %>
-      <div>
+      <div class="item">
         <%= link_to tool.name, tool.url %>
       </div>
     <% end %>

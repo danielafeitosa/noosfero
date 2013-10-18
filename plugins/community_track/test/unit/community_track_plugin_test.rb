@@ -11,6 +11,18 @@ class CommunityTrackPluginTest < ActiveSupport::TestCase
   
   attr_reader :profile, :params
 
+  should 'has name' do
+    assert CommunityTrackPlugin.plugin_name
+  end
+
+  should 'describe yourself' do
+    assert CommunityTrackPlugin.plugin_description
+  end
+
+  should 'has stylesheet' do
+    assert @plugin.stylesheet?
+  end
+
   should 'return Track as a content type if profile is a community' do
     assert_includes @plugin.content_types, CommunityTrackPlugin::Track
   end

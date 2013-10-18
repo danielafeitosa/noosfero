@@ -3,17 +3,25 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class TrackTest < ActiveSupport::TestCase
 
   def setup
-    @explicit_view_paths = File.join(File.dirname(__FILE__) + '/../../../views')
-
     profile = fast_create(Community)
     @track = CommunityTrackPlugin::Track.create!(:profile => profile, :name => 'track')
     @step = CommunityTrackPlugin::Step.create!(:parent => @track, :start_date => Date.today, :end_date => Date.today, :name => 'step', :profile => profile)
     @tool = fast_create(Article, :parent_id => @step.id, :profile_id => profile.id)
   end
 
+  should 'describe yourself' do
+    assert CommunityTrackPlugin::Track.description
+  end
+
+  should 'has a short descriptionf' do
+    assert CommunityTrackPlugin::Track.short_description
+  end
+
   should 'return comments count of children tools' do
     assert_equal 0, @track.comments_count
-    comment = fast_create(Comment, :source_id => @tool.id)
+    owner = create_user('testuser').person
+    article = create(Article, :name => 'article', :parent_id => @step.id, :profile_id => owner.id)
+    comment = create(Comment, :source => article, :author_id => owner.id)
     assert_equal 1, @track.comments_count
   end
 
@@ -71,9 +79,17 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal [step2, step3, step1], @track.steps
   end
 
-  #FIXME
-  should 'show new step button at generated html if user has permission for that' do
-    #html = instance_eval(&@track.to_html)
+  should 'save steps in a new order' do
+    @track.children.destroy_all
+    
+    step1 = CommunityTrackPlugin::Step.create!(:parent => @track, :start_date => Date.today, :end_date => Date.today, :name => "step1", :profile => @track.profile)
+    step2 = CommunityTrackPlugin::Step.create!(:parent => @track, :start_date => Date.today, :end_date => Date.today, :name => "step2", :profile => @track.profile)
+    step3 = CommunityTrackPlugin::Step.create!(:parent => @track, :start_date => Date.today, :end_date => Date.today, :name => "step3", :profile => @track.profile)
+
+    assert_equal [step1.id, step2.id, step3.id], @track.steps.map(&:id)
+    @track.reorder_steps([step3.id, step1.id, step2.id])
+    @track.reload
+    assert_equal [step3.id, step1.id, step2.id], @track.steps.map(&:id)
   end
 
 end

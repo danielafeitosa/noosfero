@@ -1,12 +1,10 @@
 class CommunityTrackPlugin::TrackCardListBlock < CommunityTrackPlugin::TrackListBlock
 
-  include CommunityTrackPlugin::Helpers::StepHelper
-
   def self.description
     _('Track Card List')
   end
 
-  def default_tile
+  def default_title
     _('Relevant Tracks as cards')
   end
 
