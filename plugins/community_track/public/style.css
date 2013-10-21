@@ -112,7 +112,7 @@
   height: 250px;
 }
 
-#track #sortable {
+#track .step_list {
   list-style-type: none;
   margin: 0;
   padding: 0;
