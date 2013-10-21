@@ -13,7 +13,11 @@ class CommunityTrackPlugin::Track < Folder
 
   def steps
     #XXX article default order is name (acts_as_filesystem) -> should use reorder (rails3)
-    steps_unsorted.sort_by(&:position)
+    steps_unsorted.sort_by(&:position).select{|s| !s.hidden}
+  end
+
+  def hidden_steps
+    steps_unsorted.select{|s| s.hidden}
   end
 
   def reorder_steps(step_ids)

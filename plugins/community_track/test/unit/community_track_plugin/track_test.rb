@@ -92,4 +92,18 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal [step3.id, step1.id, step2.id], @track.steps.map(&:id)
   end
 
+  should 'do not return hidden steps' do
+    hidden_step = CommunityTrackPlugin::Step.new(:parent => @track, :start_date => Date.today, :end_date => Date.today, :name => 'hidden step', :profile => @track.profile)
+    hidden_step.hidden = true
+    hidden_step.save!
+    assert_equal [@step], @track.steps
+  end
+
+  should 'return hidden steps' do
+    hidden_step = CommunityTrackPlugin::Step.new(:parent => @track, :start_date => Date.today, :end_date => Date.today, :name => 'hidden step', :profile => @track.profile)
+    hidden_step.hidden = true
+    hidden_step.save!
+    assert_equal [hidden_step], @track.hidden_steps
+  end
+
 end

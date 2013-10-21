@@ -8,4 +8,6 @@
   <%= labelled_form_field(_('End date'), pick_date(:article, :end_date)) %>
 </div>
 
+<%= labelled_form_field check_box(:article, :hidden) + _('Hidden Step'), '' %>
+
 <%= render :partial => 'shared/lead_and_body', :locals => {:tiny_mce => true, :body_label => 'Description:'} %>
