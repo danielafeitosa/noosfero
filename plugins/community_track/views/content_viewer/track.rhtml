@@ -29,7 +29,7 @@
       <% track.hidden_steps.each do |step| %>
         <li class="step">
           <%= hidden_field_tag "step_ids[]", step.id %>
-          <div class="position"><%= step.position %></div>
+          <div class="position"></div>
           <div class="content">
             <div class="date">
               <%= show_period(step.start_date, step.end_date) %>
