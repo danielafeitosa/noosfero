@@ -41,6 +41,10 @@ class CommunityTrackPlugin::Track < Folder
     steps_unsorted.joins(:children).sum('childrens_articles.comments_count')
   end
 
+  def css_class_name
+    "community-track-plugin-track"
+  end
+
   #FIXME make this test
   def first_paragraph
     paragraphs = Hpricot(body).search('p')

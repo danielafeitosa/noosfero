@@ -17,6 +17,10 @@ class TrackTest < ActiveSupport::TestCase
     assert CommunityTrackPlugin::Track.short_description
   end
 
+  should 'has a css class name' do
+    assert_equal 'community-track-plugin-track', @track.css_class_name
+  end
+
   should 'return comments count of children tools' do
     assert_equal 0, @track.comments_count
     owner = create_user('testuser').person

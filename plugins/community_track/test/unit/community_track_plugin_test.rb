@@ -54,4 +54,13 @@ class CommunityTrackPluginTest < ActiveSupport::TestCase
     assert_includes CommunityTrackPlugin.extra_blocks, CommunityTrackPlugin::TrackListBlock
   end
 
+  should 'return true at content_remove_new if page is a track' do
+    assert @plugin.content_remove_new(CommunityTrackPlugin::Track.new)
+  end
+
+  should 'return false at content_remove_new if page is not a track' do
+    assert !@plugin.content_remove_new(CommunityTrackPlugin::Step.new)
+    assert !@plugin.content_remove_new(Article.new)
+  end
+
 end

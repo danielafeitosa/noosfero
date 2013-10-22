@@ -154,12 +154,12 @@
   padding-right: 5px;
 }
 
-.steps_actions .save_button {
+#track .actions .save_button {
   display: none;
 }
 
-.steps_actions {
-  margin-top: 20px;
+#track .actions, #step .actions {
+  margin-bottom: 20px;
 }
 
 #edit-track-list-block .categorie_box a {
@@ -169,3 +169,4 @@
 .all_tracks .more_button {
   text-align: center;
 }
+

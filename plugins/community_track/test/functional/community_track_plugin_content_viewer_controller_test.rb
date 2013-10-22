@@ -19,17 +19,25 @@ class ContentViewerControllerTest < ActionController::TestCase
     @profile.add_admin(user.person)
   end
 
-  should 'show actions for steps when user has permission for edit track' do
+  should 'show actions for tracks when user has permission for edit' do
     get :view_page, @track.url
-    assert_tag :tag => 'div', :attributes => { :class => 'steps_actions' }
+    assert_tag :tag => 'div', :attributes => {:id => 'track' }, :descendant => { :tag => 'div', :attributes => { :class => 'actions' } }
   end
 
-  should 'do not show actions for steps when user has not permission for edit track' do
+  should 'do not show actions for tracks when user has not permission for edit' do
     user = create_user('intruder')
     logout
     login_as(user.login)
     get :view_page, @track.url
-    assert_no_tag :tag => 'div', :attributes => { :class => 'steps_actions' }
+    assert_no_tag :tag => 'div', :attributes => {:id => 'track' }, :descendant => { :tag => 'div', :attributes => { :class => 'actions' } }
+  end
+
+  should 'do not show new button at article toolbar for tracks' do
+    user = create_user('intruder')
+    logout
+    login_as(user.login)
+    get :view_page, @track.url
+    assert_no_tag :tag => 'div', :attributes => {:id => 'article-actions'}, :descendant => { :tag => 'div', :attributes => { :id => 'icon-new' } }
   end
 
   should 'display steps for tracks' do
@@ -51,6 +59,19 @@ class ContentViewerControllerTest < ActionController::TestCase
     Article.create!(:profile => @profile, :name => 'article', :parent => @step)
     get :view_page, @step.url
     assert_tag :tag => 'div', :attributes => { :class => 'tools' }, :descendant => { :tag => 'div', :attributes => { :class => 'item' } }
+  end
+
+  should 'show actions for steps when user has permission for edit' do
+    get :view_page, @step.url
+    assert_tag :tag => 'div', :attributes => {:id => 'step' }, :descendant => { :tag => 'div', :attributes => { :class => 'actions' } }
+  end
+
+  should 'do not show actions for steps when user has not permission for edit' do
+    user = create_user('intruder')
+    logout
+    login_as(user.login)
+    get :view_page, @step.url
+    assert_no_tag :tag => 'div', :attributes => {:id => 'step' }, :descendant => { :tag => 'div', :attributes => { :class => 'actions' } }
   end
 
   should 'render a div with block id for track list block' do
