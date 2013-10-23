@@ -1,7 +1,7 @@
 class CommunityTrackPluginMyprofileController < MyProfileController
   append_view_path File.join(File.dirname(__FILE__) + '/../../views')
   
-  before_filter :edit_track
+  before_filter :edit_track, :only => :save_order
 
   def edit_track
     render_access_denied unless profile.articles.find(params[:track]).allow_edit?(user)
