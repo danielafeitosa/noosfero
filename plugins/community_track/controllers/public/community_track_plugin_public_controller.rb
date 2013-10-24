@@ -33,6 +33,7 @@ class CommunityTrackPluginPublicController < PublicController
 
   def select_community
     @communities = user.memberships.select{ |community| user.has_permission?('post_content', community) }
+    @back_to = request.url
     if request.post?
       community_identifier = params[:community_identifier]
       if community_identifier.nil?
