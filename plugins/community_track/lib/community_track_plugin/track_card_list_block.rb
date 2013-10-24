@@ -4,10 +4,6 @@ class CommunityTrackPlugin::TrackCardListBlock < CommunityTrackPlugin::TrackList
     _('Track Card List')
   end
 
-  def default_title
-    _('Relevant Tracks as cards')
-  end
-
   def help
     _('This block displays a list of most relevant tracks as cards.')
   end
